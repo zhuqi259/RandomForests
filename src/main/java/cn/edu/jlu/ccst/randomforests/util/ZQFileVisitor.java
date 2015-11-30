@@ -8,8 +8,8 @@ import java.util.*;
 
 /**
  * @author zhuqi259
- * ZQFileVisitor<br>
- *     用于遍历文件[输入预处理]
+ *         ZQFileVisitor<br>
+ *         用于遍历文件[输入预处理]
  */
 public class ZQFileVisitor extends SimpleFileVisitor<Path> {
     private String basicKey = "";
@@ -68,5 +68,5 @@ public class ZQFileVisitor extends SimpleFileVisitor<Path> {
     public Map<String, List<String>> getMap() {
         return fileMap;
     }
-    
+
 }

@@ -1,13 +1,12 @@
 package cn.edu.jlu.ccst.randomforests.wordsegmenter
 
-import java.io.{File, FileOutputStream, IOException}
+import java.io.{File, FileOutputStream}
 import java.nio.ByteBuffer
-import java.nio.file.{Files, Path, Paths}
 import java.util.Properties
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.routing.RoundRobinRouter
-import cn.edu.jlu.ccst.randomforests.util.ZQFileVisitor
+import cn.edu.jlu.ccst.util.ScalaFileUtils
 import edu.stanford.nlp.ie.crf.CRFClassifier
 import edu.stanford.nlp.ling.CoreLabel
 
@@ -17,7 +16,7 @@ import scala.io.Source
 
 /**
   * @author zhuqi259
-  * akka  分词并行
+  *         akka  分词并行
   */
 object WordSegmenter extends App {
 
@@ -97,16 +96,6 @@ class Ant(dict: String, stopWord: String, inputFiles: Array[(String, String, Str
   }
   val stopWordSet = Source.fromFile(stopWord).getLines.toSet
 
-  def htmlDecode(_txt: String): String = {
-    var txt = _txt
-    txt = txt.replace("&amp;", "&")
-    txt = txt.replace("&quot;", "\"")
-    txt = txt.replace("&lt;", "<")
-    txt = txt.replace("&gt;", ">")
-    txt = txt.replace("&nbsp;", " ")
-    txt
-  }
-
   def doWordSegmentation(data: String, destination: String): Boolean = {
     print("-")
     def loop(time: Int): Boolean = {
@@ -127,20 +116,9 @@ class Ant(dict: String, stopWord: String, inputFiles: Array[(String, String, Str
     loop(0)
   }
 
-  @throws(classOf[IOException])
-  def getFileMap(fileName: String, key: String) = {
-    val fileDir: Path = Paths.get(fileName)
-    val visitor: ZQFileVisitor = new ZQFileVisitor(key)
-    val start: Long = System.currentTimeMillis
-    Files.walkFileTree(fileDir, visitor)
-    val end: Long = System.currentTimeMillis
-    Console.err.println("遍历文件夹耗时 : " + (end - start) / 1000f + " 秒 ")
-    visitor.getMap
-  }
-
   val jobs = {
     for ((fileName, key, prefix) <- inputFiles) yield {
-      val set = getFileMap(fileName, key).entrySet
+      val set = ScalaFileUtils.getFileMap(fileName, key).entrySet
       for (entry <- set) yield {
         val names = entry.getValue
         for (name <- names) yield {
@@ -167,7 +145,7 @@ class WSWorker extends Actor {
       val (source, destination) = ant.jobs(i)
       try {
         val lines = Source.fromFile(source, "GBK")
-        val result = (for (data <- lines.getLines()) yield ant.htmlDecode(data.replace("\t", " "))) mkString " "
+        val result = (for (data <- lines.getLines()) yield ScalaFileUtils.htmlDecode(data.replace("\t", " "))) mkString " "
         val dir: File = new File(destination)
         val res: Boolean = dir.getParentFile.mkdirs
         if (!res) {
