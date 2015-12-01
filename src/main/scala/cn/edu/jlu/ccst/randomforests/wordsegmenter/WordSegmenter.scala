@@ -6,7 +6,7 @@ import java.util.Properties
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.routing.RoundRobinRouter
-import cn.edu.jlu.ccst.util.ScalaFileUtils
+import cn.edu.jlu.ccst.randomforests.util.ScalaFileUtils
 import edu.stanford.nlp.ie.crf.CRFClassifier
 import edu.stanford.nlp.ling.CoreLabel
 
@@ -88,7 +88,7 @@ class Ant(dict: String, stopWord: String, inputFiles: Array[(String, String, Str
     val props: Properties = new Properties
     props.setProperty("sighanCorporaDict", dict)
     props.setProperty("serDictionary", dict + "/dict-chris6.ser.gz")
-    props.setProperty("inputEncoding", "UTF-8")
+    props.setProperty("inputEncoding", ScalaFileUtils.UTF8)
     props.setProperty("sighanPostProcessing", "true")
     val classifier = new CRFClassifier[CoreLabel](props)
     classifier.loadClassifierNoExceptions(dict + "/ctb.gz", props)
@@ -144,7 +144,7 @@ class WSWorker extends Actor {
     for (i ← start until end) {
       val (source, destination) = ant.jobs(i)
       try {
-        val lines = Source.fromFile(source, "GBK")
+        val lines = Source.fromFile(source, ScalaFileUtils.GBK)
         val result = (for (data <- lines.getLines()) yield ScalaFileUtils.htmlDecode(data.replace("\t", " "))) mkString " "
         val dir: File = new File(destination)
         val res: Boolean = dir.getParentFile.mkdirs

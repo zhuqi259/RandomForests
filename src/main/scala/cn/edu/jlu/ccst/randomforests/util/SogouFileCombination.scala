@@ -1,4 +1,4 @@
-package cn.edu.jlu.ccst.util
+package cn.edu.jlu.ccst.randomforests.util
 
 import java.io.{File, FileOutputStream}
 import java.nio.ByteBuffer
@@ -33,7 +33,7 @@ object SogouFileCombination {
       val names = entry.getValue
       for (name <- names) {
         val source = inputDir + fileSeparator + entry.getKey + fileSeparator + name
-        val lines = Source.fromFile(source, "UTF-8")
+        val lines = Source.fromFile(source, ScalaFileUtils.UTF8)
         val content = (for (data <- lines.getLines()) yield data.replace("\t", " ")) mkString " "
         val result = content + "\t" + dirNameDict(entry.getKey) + lineSeparator
         f write ByteBuffer.wrap(result.getBytes)

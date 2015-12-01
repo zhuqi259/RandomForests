@@ -1,15 +1,16 @@
-package cn.edu.jlu.ccst.util
+package cn.edu.jlu.ccst.randomforests.util
 
 import java.io.IOException
 import java.nio.file.{Files, Paths, Path}
-
-import cn.edu.jlu.ccst.randomforests.util.ZQFileVisitor
 
 /**
   * @author zhuqi259
   *         Scala版本的文件工具类
   */
 object ScalaFileUtils {
+
+  val GBK = "GBK"
+  val UTF8 = "UTF-8"
 
   def htmlDecode(_txt: String): String = {
     var txt = _txt

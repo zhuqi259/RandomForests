@@ -3,6 +3,7 @@ package akka.tutorials.scala
 import java.net.URLDecoder
 import java.util.Properties
 
+import cn.edu.jlu.ccst.randomforests.util.ScalaFileUtils
 import edu.stanford.nlp.ie.crf.CRFClassifier
 import edu.stanford.nlp.util.CoreMap
 
@@ -19,7 +20,7 @@ class TextSegmentation(val data: String) extends Serializable {
     val props: Properties = new Properties
     props.setProperty("sighanCorporaDict", data)
     props.setProperty("serDictionary", data + "/dict-chris6.ser.gz")
-    props.setProperty("inputEncoding", "UTF-8")
+    props.setProperty("inputEncoding", ScalaFileUtils.UTF8)
     props.setProperty("sighanPostProcessing", "true")
     val classifier = new CRFClassifier(props)
     classifier.loadClassifierNoExceptions(data + "/ctb.gz", props)
