@@ -117,6 +117,7 @@ class Ant(dict: String, stopWord: String, inputFiles: Array[(String, String, Str
   }
 
   val jobs = {
+    // {} for 上一层的括号必须加上, 运算符优先级
     for ((fileName, key, prefix) <- inputFiles) yield {
       val set = ScalaFileUtils.getFileMap(fileName, key).entrySet
       for (entry <- set) yield {

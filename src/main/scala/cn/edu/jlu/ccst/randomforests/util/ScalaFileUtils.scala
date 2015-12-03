@@ -1,6 +1,6 @@
 package cn.edu.jlu.ccst.randomforests.util
 
-import java.io.IOException
+import java.io.{File, IOException}
 import java.nio.file.{Files, Paths, Path}
 
 /**
@@ -9,6 +9,9 @@ import java.nio.file.{Files, Paths, Path}
   */
 object ScalaFileUtils {
 
+  val fileSeparator = File.separator
+  val lineSeparator = System.getProperty("line.separator")
+  
   val GBK = "GBK"
   val UTF8 = "UTF-8"
 
