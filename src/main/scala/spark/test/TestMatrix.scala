@@ -8,9 +8,6 @@ import org.apache.spark.mllib.linalg.{Matrix, Matrices}
   *         测试Matrix
   */
 object TestMatrix extends SparkContextSupport {
-  def foreachActive(f: (Int, Int, Double) => Unit): Unit = {
-
-  }
 
   def main(args: Array[String]) {
     val dm: Matrix = Matrices.dense(3, 4, Array(1, 4, 8, 2, 5, 9, 3, 6, 1, 4, 7, 2))
