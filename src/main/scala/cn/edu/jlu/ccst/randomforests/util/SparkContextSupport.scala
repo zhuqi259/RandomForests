@@ -3,7 +3,8 @@ package cn.edu.jlu.ccst.randomforests.util
 import org.apache.spark.{SparkContext, SparkConf}
 
 /**
-  * Created by zhuqi259 on 2015/12/1.
+  * @author zhuqi259
+  *         SparkContext初始化
   */
 trait SparkContextSupport {
   val conf = new SparkConf()

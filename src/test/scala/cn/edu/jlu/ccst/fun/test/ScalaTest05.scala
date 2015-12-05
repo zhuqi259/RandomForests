@@ -84,11 +84,7 @@ object ScalaTest05 extends App {
     else fun(s2 - s1)
   }
 
-//  for (i <- 100 to 999 if !single(i)) {
-//    println(i, fun(i))
-//  }
-
-  def calculate(n: Int) = {
+  def calculate(n: Int):(List[List[Int]], Int) = {
     // n位数
     val start: Long = System.currentTimeMillis
     val min = math.pow(10, n - 1).toInt
@@ -101,7 +97,7 @@ object ScalaTest05 extends App {
     // println(result, result.size)
     // key去重
     val xx = result.zip(result).map(x => (x._1.sorted, x._2)).groupBy(_._1)
-      .map { case (group, traversable) => traversable.reduce { (a, b) => (a._1, a._2) } }.values
+      .map { case (group, traversable) => traversable.reduce { (a, b) => (a._1, a._2) } }.values.toList
     val duration = (System.currentTimeMillis - start).millis
     println("duration = %s".format(duration))
     (xx, xx.size)

@@ -6,7 +6,8 @@ import org.apache.spark.mllib.linalg.{Vectors, Vector}
 import scala.collection.mutable
 
 /**
-  * Created by zhuqi259 on 2015/12/1.
+  * @author zhuqi259
+  *         归一化 TF Normalization
   */
 class ZQHashingTF(override val numFeatures: Int) extends HashingTF {
 

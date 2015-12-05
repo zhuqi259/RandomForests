@@ -1,8 +1,5 @@
 package cn.edu.jlu.ccst.fun.test
 
-import scala.concurrent.duration._
-import scala.math.pow
-
 /**
   * @author zhuqi259
   *         完全数（Perfect number)，又称完美数或完备数，是一些特殊的自然数。
@@ -12,8 +9,7 @@ import scala.math.pow
   *
   *         编程求10000以内的完全数。
   */
-object ScalaTest03 extends App {
-
+class ScalaTest03 extends TAction {
   def isPerfectNumber(n: Int): Boolean = {
     def loop(t: Int, a: Int, b: Int): Int = {
       if (a > b) t - n
@@ -23,9 +19,12 @@ object ScalaTest03 extends App {
     loop(0, 1, n) == n
   }
 
-  val start: Long = System.currentTimeMillis
-  val result = for (i <- 2 to 10000 if isPerfectNumber(i)) yield i
-  val duration = (System.currentTimeMillis - start).millis
-  println(result mkString ", ")
-  println("duration = %s".format(duration))
+  override def doSomething() = {
+    val result = for (i <- 2 to 10000 if isPerfectNumber(i)) yield i
+    println(result mkString ", ")
+  }
+}
+
+object ScalaTest03 extends App {
+  new ScalaTest03 with Timer doSomething()
 }

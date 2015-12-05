@@ -1,7 +1,5 @@
 package cn.edu.jlu.ccst.fun.test
 
-import scala.concurrent.duration._
-
 /**
   * @author zhuqi259
   *         220的真因数之和为1+2+4+5+10+11+20+22+44+55+110=284
@@ -10,8 +8,7 @@ import scala.concurrent.duration._
   *
   *         求100000以内的相亲数。
   */
-object ScalaTest04 extends App {
-
+class ScalaTest04 extends TAction {
   def sumOfFactors(n: Int): Int = {
     def loop(t: Int, a: Int, b: Int): Int = {
       if (a > b) t - n
@@ -21,13 +18,15 @@ object ScalaTest04 extends App {
     loop(0, 1, n)
   }
 
-  val start: Long = System.currentTimeMillis
-  val result = for {
-    i <- 2 to 100000
-    j = sumOfFactors(i)
-    if i < j && sumOfFactors(j) == i
-  } yield (i, j)
-  val duration = (System.currentTimeMillis - start).millis
-  println(result mkString ", ")
-  println("duration = %s".format(duration))
+  override def doSomething() = {
+    val result = for {
+      i <- 2 to 100000
+      j = sumOfFactors(i) if i < j && sumOfFactors(j) == i
+    } yield (i, j)
+    println(result mkString ", ")
+  }
+}
+
+object ScalaTest04 extends App {
+  new ScalaTest04 with Timer doSomething()
 }
