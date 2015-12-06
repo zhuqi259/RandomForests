@@ -100,13 +100,13 @@ object ScalaTest05 extends App {
       .map { case (group, traversable) => traversable.reduce { (a, b) => (a._1, a._2) } }.values.toList
     val duration = (System.currentTimeMillis - start).millis
     println("duration = %s".format(duration))
-    (xx, xx.size)
+    (xx, xx.length)
   }
 
   val start: Long = System.currentTimeMillis
   for (i <- 1 to 6) {
-    val (result, size) = calculate(i)
-    println(result, size)
+    val (result, length) = calculate(i)
+    println(result, length)
   }
   val duration = (System.currentTimeMillis - start).millis
   println("\n\nduration = %s".format(duration))
