@@ -1,4 +1,4 @@
-package cn.edu.jlu.ccst.randomforests.test.TFIDF
+package spark.test.TFIDF
 
 import cn.edu.jlu.ccst.randomforests.util.SparkContextSupport
 import org.apache.spark.mllib.feature.{IDF, ZQHashingTF}

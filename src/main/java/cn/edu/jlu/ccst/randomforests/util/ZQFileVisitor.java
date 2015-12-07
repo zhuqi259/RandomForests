@@ -15,7 +15,7 @@ public class ZQFileVisitor extends SimpleFileVisitor<Path> {
     private String basicKey = "";
     private String _key = "";
     private List<String> list_file = new ArrayList<>();
-    private Map<String, List<String>> fileMap = new HashMap<>();
+    private final Map<String, List<String>> fileMap = new HashMap<>();
 
     public ZQFileVisitor(String key) {
         basicKey = key;
