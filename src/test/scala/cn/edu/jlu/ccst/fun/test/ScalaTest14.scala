@@ -23,8 +23,7 @@ class ScalaTest14 extends TAction {
   override def doSomething() = {
     val primes = prime(1000)
     val result = for {
-      i <- 2 to 1000
-      if primes.contains(i)
+      i <- 2 to 1000 if primes.contains(i)
       j = i * i if j == j.toString.map(_ - '0').reverse.reduceLeft(10 * _ + _)
     } yield i
     println(result mkString ", ")
@@ -35,4 +34,3 @@ class ScalaTest14 extends TAction {
 object ScalaTest14 extends App {
   new ScalaTest14 with Timer doSomething()
 }
-
