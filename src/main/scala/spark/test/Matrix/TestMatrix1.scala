@@ -1,4 +1,4 @@
-package spark.test
+package spark.test.Matrix
 
 import cn.edu.jlu.ccst.randomforests.util.SparkContextSupport
 import org.apache.spark.mllib.linalg.{Matrix, Matrices}
@@ -7,7 +7,7 @@ import org.apache.spark.mllib.linalg.{Matrix, Matrices}
   * @author zhuqi259
   *         测试Matrix
   */
-object TestMatrix extends SparkContextSupport {
+object TestMatrix1 extends SparkContextSupport {
 
   def main(args: Array[String]) {
     val dm: Matrix = Matrices.dense(3, 4, Array(1, 4, 8, 2, 5, 9, 3, 6, 1, 4, 7, 2))

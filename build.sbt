@@ -10,11 +10,11 @@ libraryDependencies ++= {
   val sparkVersion = "1.5.2"
   val hadoopVersion = "2.6.2"
   Seq(
-    "org.apache.spark" % "spark-core_2.10" % sparkVersion % "provided" exclude("org.apache.hadoop", "hadoop-client"),
-    "org.apache.spark" % "spark-mllib_2.10" % sparkVersion % "provided",
+    "org.apache.spark" %% "spark-core" % sparkVersion % "provided" exclude("org.apache.hadoop", "hadoop-client"),
+    "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
     "org.apache.hadoop" % "hadoop-client" % hadoopVersion % "provided",
     "edu.stanford.nlp" % "stanford-corenlp" % "3.4.1",
-    "com.typesafe.akka" % "akka-actor_2.10" % "2.3.14"
+    "com.typesafe.akka" %% "akka-actor" % "2.3.14"
   )
 }
 
