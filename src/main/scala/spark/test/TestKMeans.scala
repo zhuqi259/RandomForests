@@ -1,9 +1,10 @@
 package spark.test
 
+import breeze.linalg.DenseVector
 import cn.edu.jlu.ccst.randomforests.util.SparkContextSupport
 import org.apache.spark.mllib.clustering.KMeans
 import org.apache.spark.mllib.linalg.Vectors
-import breeze.linalg.DenseVector
+import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.stat.Statistics
 
 object TestKMeans extends SparkContextSupport {
@@ -36,5 +37,9 @@ object TestKMeans extends SparkContextSupport {
     }.sum
     println("J3 = %f".format(J3))
 
+    val points = centers.zipWithIndex.map {
+      case (vec, label) => LabeledPoint(label, vec)
+    }
+    println(points mkString "\n")
   }
 }
