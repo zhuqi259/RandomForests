@@ -1,6 +1,6 @@
 package spark.test.Matrix
 
-import breeze.linalg.{DenseMatrix => DM, DenseVector => DV, Axis}
+import breeze.linalg.{DenseMatrix => DM, DenseVector => DV, Transpose, Axis}
 import breeze.math.Complex
 import cn.edu.jlu.ccst.randomforests.util.SparkContextSupport
 
@@ -79,9 +79,9 @@ object TestMatrix4 extends SparkContextSupport {
     n(4, ::).t := DV(Complex(1, 1), Complex(2, 2), Complex(3, 3), Complex(4, 4))
     println(n)
 
-//    val n1 = DM.ones[Complex](5, 4)
-//    n1(4, ::) := DV(Complex(1, 1), Complex(2, 2), Complex(3, 3), Complex(4, 4)).t
-//    println(n1)
+    //    val n1 = DM.ones[Complex](5, 4)
+    //    n1(4, ::) := DV(Complex(1, 1), Complex(2, 2), Complex(3, 3), Complex(4, 4)).t
+    //    println(n1)
 
     val dmData6: DM[Int] = gradient3(m)
     println(dmData6)
@@ -93,6 +93,18 @@ object TestMatrix4 extends SparkContextSupport {
     val data2: Vector[String] = show(dmData7)
     println(data2)
     sc.parallelize(data2).saveAsTextFile(_to)
+
+    println(DV(1, 2, 3, 4).t)
+    val dv1: DV[Complex] = DV(Complex(1, 1), Complex(2, 2), Complex(3, 3), Complex(4, 4))
+    println(dv1)
+    val dd2: DM[Complex] = dv1.t
+    println(dd2)
+    val dd3: DM[Complex] = dd2.t
+    println(dd3)
+    val dd4: Transpose[DV[Complex]] = dmData7(0, ::)
+    println(dd4)
+    val dd5: DV[Complex] = dd4.t
+    println(dd5)
     sc.stop()
   }
 }
