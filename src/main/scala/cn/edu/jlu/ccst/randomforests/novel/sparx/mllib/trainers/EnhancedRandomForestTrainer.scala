@@ -11,7 +11,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   */
 class EnhancedRandomForestTrainer(maxDepth: Int = 15,
                                   maxBins: Int = 32,
-                                  numTrees: Int = 20,
+                                  numTrees: Int = 15,
                                   impurity: String = "gini",
                                   featureSubsetStrategy: String = "auto",
                                   useWeights: Boolean = true,

@@ -17,7 +17,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   */
 class RandomForestTrainer(maxDepth: Int = 15,
                           maxBins: Int = 32,
-                          numTrees: Int = 20,
+                          numTrees: Int = 15,
                           impurity: String = "gini",
                           featureSubsetStrategy: String = "auto")
   extends Trainer[RandomForestModel] {
