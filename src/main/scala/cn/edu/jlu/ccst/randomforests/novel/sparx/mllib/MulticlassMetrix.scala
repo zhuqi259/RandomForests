@@ -22,10 +22,25 @@ object MulticlassMetrix {
             trainingRuntime: Trainer.Runtime): MulticlassMetrix = {
 
     val metricsByLabel = flowData.indexToLabel.map { case (label, labelString) =>
-      val tpr = metrics.truePositiveRate(label)
-      val fpr = metrics.falsePositiveRate(label)
-      val pr = metrics.precision(label)
-      (labelString -> ClassMetrics(labelString, pr, tpr, fpr))
+      var tpr: Double = 0
+      try {
+        tpr = metrics.truePositiveRate(label)
+      } catch {
+        case _: Throwable => tpr = 0
+      }
+      var fpr: Double = 0
+      try {
+        fpr = metrics.falsePositiveRate(label)
+      } catch {
+        case _: Throwable => fpr = 0
+      }
+      var pr: Double = 0
+      try {
+        pr = metrics.precision(label)
+      } catch {
+        case _: Throwable => pr = 0
+      }
+      labelString -> ClassMetrics(labelString, pr, tpr, fpr)
     }
 
     MulticlassMetrix(metrics.precision, metrics.weightedPrecision,
