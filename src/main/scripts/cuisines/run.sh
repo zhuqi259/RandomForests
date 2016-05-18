@@ -21,3 +21,4 @@ cd $SPARK_HOME
 
 cd /usr/hadoop
 bin/hdfs dfs -cat data/cuisines/predictions.json_RandomForestModel.csv > ~/cuisines_RandomForestModel.csv
+bin/hdfs dfs -cat data/cuisines/predictions.json_EnhancedRandomForestModel.csv > ~/cuisines_EnhancedRandomForestModel.csv

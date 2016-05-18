@@ -1,7 +1,7 @@
 package cn.edu.jlu.ccst.randomforests.novel.sparx
 
 import cn.edu.jlu.ccst.randomforests.novel.removeHdfsFile
-import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.trainers.{RandomForestTrainer, Trainer}
+import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.trainers.{EnhancedRandomForestTrainer, RandomForestTrainer, Trainer}
 import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.{FlowData, Model, MulticlassMetrix}
 import org.apache.spark.SparkContext
 
@@ -26,7 +26,7 @@ object BuildModels extends SparkRunnable {
     def train[T](trainer: Trainer[T]): (Model[T], MulticlassMetrix) =
       trainer.trainEvaluate(flowData)
 
-    val trainers = List(RandomForestTrainer())
+    val trainers = List(RandomForestTrainer(), EnhancedRandomForestTrainer())
 
     val trainingResults = trainers.map(train(_))
 

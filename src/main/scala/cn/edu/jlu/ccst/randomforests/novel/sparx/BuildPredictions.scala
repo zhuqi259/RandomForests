@@ -5,6 +5,7 @@ import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.{FlowData, Model}
 import cn.edu.jlu.ccst.randomforests.novel.sparx.model.{PredictedRecipe, PredictionData}
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.linalg.Vectors
+import org.apache.spark.mllib.tree.EnhancedRandomForestModel
 import org.apache.spark.mllib.tree.model.RandomForestModel
 
 /**
@@ -42,7 +43,8 @@ object BuildPredictions extends SparkRunnable {
     }.cache
 
     // Set the models are we using for predictions
-    val models: List[Model[_]] = List(RandomForestModel.load(sc, configuration.randomForestPath))
+    val models: List[Model[_]] = List(RandomForestModel.load(sc, configuration.randomForestPath),
+      EnhancedRandomForestModel.load(sc, configuration.enhancedRandomForestPath))
 
 
     // Load the metrics so we can produce nice prediction data beans

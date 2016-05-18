@@ -22,3 +22,4 @@ cd $SPARK_HOME
 
 cd /usr/hadoop
 bin/hdfs dfs -cat data/SogouC.reduced/predictions.json_RandomForestModel.csv > ~/SogouC_reduced_RandomForestModel.csv
+bin/hdfs dfs -cat data/SogouC.reduced/predictions.json_EnhancedRandomForestModel.csv > ~/SogouC_reduced_EnhancedRandomForestModel.csv

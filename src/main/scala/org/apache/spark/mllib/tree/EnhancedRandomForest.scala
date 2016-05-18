@@ -2,10 +2,11 @@ package org.apache.spark.mllib.tree
 
 import scala.collection.mutable
 import scala.collection.JavaConverters._
-import org.apache.spark.Logging
+import org.apache.spark.{Logging, SparkContext}
+import org.apache.spark.annotation.Since
 import org.apache.spark.api.java.JavaRDD
 import org.apache.spark.mllib.regression.LabeledPoint
-import org.apache.spark.mllib.tree.configuration.Strategy
+import org.apache.spark.mllib.tree.configuration.{Algo, Strategy}
 import org.apache.spark.mllib.tree.configuration.Algo.{Classification, Regression}
 import org.apache.spark.mllib.tree.configuration.QuantileStrategy._
 import org.apache.spark.mllib.tree.impl.{BaggedPoint, DecisionTreeMetadata, NodeIdCache, TimeTracker, TreePoint}
@@ -16,6 +17,8 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.util.Utils
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.mllib.util.Loader
+
 import scala.util.Random
 
 /**
@@ -65,6 +68,34 @@ Variable Importance
         .reverse
         .map(x => "Feature Index %d , Importance %.4f".format(x._2, x._1)).mkString("\n"))
   }
+}
+
+
+object EnhancedRandomForestModel {
+
+  @Since("1.3.0")
+  def load(sc: SparkContext, path: String): EnhancedRandomForestModel = {
+    val (loadedClassName, version, jsonMetadata) = Loader.loadMetadata(sc, path)
+    val classNameV1_0 = SaveLoadV1_0.thisClassName
+    (loadedClassName, version) match {
+      case (className, "1.0") if className == classNameV1_0 =>
+        val metadata = TreeEnsembleModel.SaveLoadV1_0.readMetadata(jsonMetadata)
+        // assert(metadata.treeWeights.forall(_ == 1.0))
+        val trees =
+          TreeEnsembleModel.SaveLoadV1_0.loadTrees(sc, path, metadata.treeAlgo)
+        val forest = new RandomForestModel(Algo.fromString(metadata.algo), trees)
+        new EnhancedRandomForestModel(forest, Some(metadata.treeWeights), None, None)
+      case _ => throw new Exception(s"RandomForestModel.load did not recognize model" +
+        s" with (className, format version): ($loadedClassName, $version).  Supported:\n" +
+        s"  ($classNameV1_0, 1.0)")
+    }
+  }
+
+  private object SaveLoadV1_0 {
+    // Hard-code class name string in case it changes in the future
+    def thisClassName: String = "org.apache.spark.mllib.tree.model.RandomForestModel"
+  }
+
 }
 
 private[tree] case object EnhancedTreePoint {

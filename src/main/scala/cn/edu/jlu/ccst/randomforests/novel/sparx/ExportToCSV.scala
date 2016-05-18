@@ -6,6 +6,7 @@ import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.Model
 import cn.edu.jlu.ccst.randomforests.novel.sparx.model.PredictedRecipe
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.SparkContext
+import org.apache.spark.mllib.tree.EnhancedRandomForestModel
 import org.apache.spark.mllib.tree.model.RandomForestModel
 
 import scala.util.Try
@@ -18,7 +19,8 @@ object ExportToCSV extends SparkRunnable {
 
   def run(implicit sc: SparkContext, configuration: Configuration) = {
 
-    val models: List[Model[_]] = List(RandomForestModel.load(sc, configuration.randomForestPath))
+    val models: List[Model[_]] = List(RandomForestModel.load(sc, configuration.randomForestPath),
+      EnhancedRandomForestModel.load(sc, configuration.enhancedRandomForestPath))
 
     // Load the predictions
     val predictions = sc.objectFile[PredictedRecipe](configuration.outputPredictionsPath)

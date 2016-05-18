@@ -4,6 +4,7 @@ import cn.edu.jlu.ccst.randomforests.novel.removeHdfsFile
 import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.{Model, MulticlassMetrix}
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.classification.{LogisticRegressionModel, NaiveBayesModel}
+import org.apache.spark.mllib.tree.EnhancedRandomForestModel
 import org.apache.spark.mllib.tree.model.{DecisionTreeModel, RandomForestModel}
 
 /**
@@ -26,7 +27,8 @@ object DaoUtils {
   }
 
   def getPath(model: Model[_])(implicit configuration: Configuration) = model.self match {
-    case m2: RandomForestModel => configuration.randomForestPath
+    case m1: RandomForestModel => configuration.randomForestPath
+    case m2: EnhancedRandomForestModel => configuration.enhancedRandomForestPath
   }
 
 }

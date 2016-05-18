@@ -27,4 +27,6 @@ case class Configuration(args: Array[String]) {
 
   val randomForestPath = trainingDataRoot + "random_forest.model"
 
+  val enhancedRandomForestPath = trainingDataRoot + "enhanced_random_forest.model"
+
 }
