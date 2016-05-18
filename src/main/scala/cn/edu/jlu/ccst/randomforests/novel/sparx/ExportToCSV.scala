@@ -32,10 +32,23 @@ object ExportToCSV extends SparkRunnable {
       (m.name, new PrintWriter(new BufferedOutputStream(hdfs.create(path, true)), true))
     }.toMap
 
+    val cuisines1 = Array("C000007", "C000008", "C000010", "C000013", "C000014",
+      "C000016", "C000020", "C000022", "C000023", "C000024")
+    val cuisines2 = Array("C000008", "C000010", "C000013", "C000014",
+      "C000016", "C000020", "C000022", "C000023", "C000024")
+
     predictions.collect.foreach { predict =>
       predict.predictions.foreach { p =>
         val os = dos(p.model)
-        val record = s"${predict.id}, ${p.prediction}\n"
+        val record =
+          configuration.inputDataType match {
+            case "cuisines" =>
+              s"${predict.id}, ${p.prediction}\n"
+            case "SogouC.mini" =>
+              s"${predict.id}, ${p.prediction}, ${cuisines1(predict.id)}\n"
+            case "SogouC.reduced" =>
+              s"${predict.id}, ${p.prediction}, ${cuisines2(predict.id)}\n"
+          }
         Try(os.print(record))
       }
     }

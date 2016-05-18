@@ -17,9 +17,8 @@ object CleanupData extends SparkRunnable {
 
   def run(implicit sc: SparkContext, configuration: Configuration) = {
 
-
     // import the recipes
-    val recipes = RecipesImporter.importFrom(configuration.inputTrainingData)
+    val recipes = RecipesImporter.importFrom(configuration.inputTrainingData, configuration.inputDataType)
 
     // Normally we should keep this an RDD, but we have a small list here
     val cuisines = recipes.map(r => r.cuisine)

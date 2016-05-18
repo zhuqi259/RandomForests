@@ -19,7 +19,7 @@ object PredictionPipeline {
 
     val sqc = new SQLContext(sc)
 
-    val recipes = RecipesImporter.importFrom(configuration.recipesPath)
+    val recipes = RecipesImporter.importFrom(configuration.recipesPath, configuration.inputDataType)
 
     val data = sqc.createDataFrame(recipes)
     //

@@ -4,22 +4,18 @@ import cn.edu.jlu.ccst.randomforests.novel.sparx.mllib.transformers.{ChiSqSelect
 import org.apache.spark.SparkContext
 
 /**
- * Import training data from files and save the LabeledVectors
- * along with the label and feature mappings.
- */
+  * Import training data from files and save the LabeledVectors
+  * along with the label and feature mappings.
+  */
 object ImportData extends SparkRunnable {
 
   def main(args: Array[String]) = {
-
     DefaultSparkRunner(this.getClass.getName, args).run(this)
-
   }
 
   def run(implicit sc: SparkContext, configuration: Configuration) = {
-
-
     // import the recipes
-    val recipes = RecipesImporter.importFrom(configuration.inputTrainingData)
+    val recipes = RecipesImporter.importFrom(configuration.inputTrainingData, configuration.inputDataType)
 
     // Transform the recipes into training data
     val flowData = TrainingDataImporter
@@ -28,7 +24,6 @@ object ImportData extends SparkRunnable {
 
     // Store the flow data for later processing
     flowData.save(configuration.dataPath)
-
   }
 
 }

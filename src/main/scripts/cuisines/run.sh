@@ -18,3 +18,6 @@ cd $SPARK_HOME
   app.input.file.test="$APP_INPUT_FILE_TEST" \
   app.output.file.predictions="$APP_OUTPUT_FILE_PREDICTIONS" \
   app.model.dir="$APP_MODEL_DIR"
+
+cd /usr/hadoop
+bin/hdfs dfs -cat data/cuisines/predictions.json_RandomForestModel.csv > ~/cuisines_RandomForestModel.csv

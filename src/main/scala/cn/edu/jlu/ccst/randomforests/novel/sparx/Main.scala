@@ -3,7 +3,7 @@ package cn.edu.jlu.ccst.randomforests.novel.sparx
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
-  *
+  * 主程序
   */
 object Main {
 

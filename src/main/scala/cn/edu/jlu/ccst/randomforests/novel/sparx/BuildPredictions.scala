@@ -29,7 +29,7 @@ object BuildPredictions extends SparkRunnable {
     val flowData = FlowData.load(configuration.dataPath)
 
     // Import the test recipes for predictions
-    val testRecipes = RecipesImporter.importFrom(configuration.inputTestingData)
+    val testRecipes = RecipesImporter.importFrom(configuration.inputTestingData, configuration.inputDataType)
 
     // Transform the test recipes into feature vectors
     val testData = testRecipes.map { r =>

@@ -19,7 +19,7 @@ object TrainingDataImporter extends SparkRunnable with Transformer[RDD[Recipe]] 
 
   def run(implicit sc: SparkContext, configuration: Configuration) = {
     // import the recipes
-    val recipes = RecipesImporter.importFrom(configuration.inputTrainingData)
+    val recipes = RecipesImporter.importFrom(configuration.inputTrainingData, configuration.inputDataType)
 
     // Create the flowData object
     val flowData = TrainingDataImporter.transform(recipes)

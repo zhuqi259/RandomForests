@@ -9,6 +9,8 @@ case class Configuration(args: Array[String]) {
 
   val argsMap = args.map(_.split("=")).map(x => (x(0), x(1))).toMap
 
+  val inputDataType = argsMap.getOrElse("app.input.file.type", "cuisines")
+
   val inputTrainingData = argsMap.getOrElse("app.input.file.training", "data/cuisines/train.json")
 
   val inputTestingData = argsMap.getOrElse("app.input.file.test", "data/cuisines/test.json")
